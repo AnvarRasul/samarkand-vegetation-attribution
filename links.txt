@@ -1,0 +1,111 @@
+====================================================================
+Raw Data Sources — Samarkand Vegetation Attribution
+====================================================================
+
+All datasets were accessed via Google Earth Engine or the Copernicus CDS.
+Raw files are NOT included in this package (491 GeoTIFFs, ~65 MB, plus the AOI shapefile).
+To reproduce, download from the sources below and place in the indicated folders.
+
+--------------------------------------------------------------------
+NDVI — MODIS MOD13Q1 Collection 6.1
+--------------------------------------------------------------------
+Product   : MOD13Q1.061 (GEE: MODIS/061/MOD13Q1; 16-day, 250 m)
+Variable  : NDVI (monthly mean of the 16-day composites starting in
+            each month, exported at 1 km; Apr–Oct used in the analysis)
+Period    : January 2015 – December 2024 (120 monthly GeoTIFFs)
+Source    : NASA LP DAAC via Google Earth Engine
+Citation  : Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3
+            Global 250m SIN Grid V061 [MOD13Q1]. NASA EOSDIS LP DAAC.
+            https://doi.org/10.5067/MODIS/MOD13Q1.061
+Script    : scripts/gee/ndvi_monthly_downloader.js
+Output folder: MOD13Q1_MONTHLY_NDVI/
+Filename pattern: MOD13Q1_NDVI_YYYY_MM_samarkand_4326.tif
+
+--------------------------------------------------------------------
+LST — MODIS MOD11A2 Collection 6.1
+--------------------------------------------------------------------
+Product   : MOD11A2.061 (GEE: MODIS/061/MOD11A2; 8-day, 1 km)
+Variable  : LST_Day_1km (monthly mean daytime LST, converted to deg C)
+Period    : 2015–2024 (120 monthly GeoTIFFs)
+Source    : NASA LP DAAC via Google Earth Engine
+Citation  : Wan, Z., Hook, S., & Hulley, G. (2021). MOD11A2 MODIS/Terra
+            Land Surface Temperature/Emissivity 8-Day L3 Global 1km.
+            NASA EOSDIS LP DAAC.
+            https://doi.org/10.5067/MODIS/MOD11A2.061
+Script    : scripts/gee/temperature_monthly_downloader.js
+            (set endYear = 2024; the script exports to Drive folder
+            MOD11A2_MONTHLY — rename it to the folder below)
+Output folder: TEMPERATURE_MOD11A2_MONTHLY/
+Filename pattern: MOD11A2_LST_YYYY_MM_samarkand_4326.tif
+
+--------------------------------------------------------------------
+Precipitation — CHIRPS v2.0
+--------------------------------------------------------------------
+Product   : CHIRPS Daily v2.0 (aggregated to monthly totals)
+Variable  : Precipitation (mm month-1)
+Resolution: 0.05 deg (~5.5 km) -> resampled to ~1 km
+Period    : 2015–2024 (120 monthly GeoTIFFs)
+Source    : UCSB Climate Hazards Center via Google Earth Engine
+            https://www.chc.ucsb.edu/data/chirps
+Citation  : Funk, C. et al. (2015). The climate hazards infrared
+            precipitation with stations. Scientific Data 2, 150066.
+            https://doi.org/10.1038/sdata.2015.66
+Output folder: CHIRPS_MONTHLY_PRECIPITATION/
+Filename pattern: CHIRPS_MONTHLY_YYYY_MM_samarkand_4326.tif
+
+--------------------------------------------------------------------
+Solar Radiation — ERA5-Land SSRD
+--------------------------------------------------------------------
+Product   : ERA5-Land Surface Solar Radiation Downwards (SSRD)
+Variable  : ssrd (W m-2, monthly mean from hourly accumulations)
+Resolution: 0.1 deg (~11 km) -> resampled to ~1 km
+Period    : 2015–2024 (120 monthly GeoTIFFs)
+Source    : Copernicus Climate Data Store (CDS)
+            https://cds.climate.copernicus.eu
+Citation  : Munoz-Sabater, J. et al. (2021). ERA5-Land: A state-of-the-art
+            global reanalysis dataset for land applications.
+            Earth System Science Data, 13, 4349-4383.
+            https://doi.org/10.5194/essd-13-4349-2021
+Output folder: ERA5_SSRD_1km_Monthly_solar_rad/
+Filename pattern: ERA5_SSRD_1km_YYYY_MM.tif
+
+--------------------------------------------------------------------
+Human Footprint Index — Mu et al. (2022), figshare record v8
+--------------------------------------------------------------------
+Product   : Annual global terrestrial Human Footprint (hfp2000–hfp2024)
+Variable  : HFI composite index (0–50 scale)
+Resolution: ~1 km (Mollweide) -> resampled to the 1 km master grid
+Period    : 2015–2024 (10 annual GeoTIFFs)
+Source    : figshare https://doi.org/10.6084/m9.figshare.16571064.v8
+NOTE      : The paper covers 2000–2018 only. The 2019–2024 layers come
+            from later, undocumented versions of the record and show a
+            step change 2018->2019 (see report Section 4.7).
+Citation  : Mu, H. et al. (2022). A global record of annual terrestrial
+            Human Footprint dataset from 2000 to 2018.
+            Scientific Data 9, 176.
+            https://doi.org/10.1038/s41597-022-01284-8
+Output folder: hfp_2015-2024/
+Filename pattern: hfpYYYY_samarkand.tif
+
+--------------------------------------------------------------------
+Land Cover — ESA WorldCover 2021 v200
+--------------------------------------------------------------------
+Product   : ESA WorldCover 2021 v200
+Variable  : Land cover classification (11 classes, 10 m)
+Resolution: 10 m -> aggregated to ~1 km (mode)
+Date      : 2021 (single epoch)
+Source    : ESA via Zenodo https://doi.org/10.5281/zenodo.7254221
+Citation  : Zanaga, D. et al. (2022). ESA WorldCover 10 m 2021 v200.
+            Zenodo. https://doi.org/10.5281/zenodo.7254221
+Output folder: ESA_world_cover/
+Filename: ESA_WorldCover_2021_Clipped.tif (10 m clipped)
+          WorldCover_2021_Samarkand_1km.tif (1 km aggregated)
+
+--------------------------------------------------------------------
+Study Area Boundary
+--------------------------------------------------------------------
+Source    : OCHA CODAB / GADM administrative boundaries
+Type      : Shapefile (EPSG:4326)
+Output folder: AOI/
+Filename  : samarkand_region.shp (+ .dbf, .prj, .shx, .cpg)
+====================================================================
